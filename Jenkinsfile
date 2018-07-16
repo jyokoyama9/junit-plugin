@@ -12,13 +12,19 @@ pipeline {
             }
             post {
                 success {
+                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
                     junit 'target/surefire-reports/**/*.xml' 
                 }
             }
         }
         stage('静的解析') {
             steps {
-                $class: 'CheckStylePublisher'
+                parallel{
+                    step([
+                        $class: 'CheckStylePublisher',
+                        pattern: "target/checkstyle/*.xml"
+                    ])
+                }
             }
         }
     }

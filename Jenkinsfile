@@ -8,7 +8,7 @@ pipeline {
     stages { 
         stage('Build') { 
             steps { 
-               sh 'mvn -Dmaven.test.failure.ignore=true clean build site' 
+                sh 'mvn -Dmaven.test.failure.ignore=true clean build site' 
             }
             post {
                 success {
@@ -19,11 +19,7 @@ pipeline {
         }
         stage('静的解析') {
             steps {
-                parallel{
-                    step([
-                        $class: 'CheckStylePublisher',
-                        pattern: "target/checkstyle/*.xml"
-                    ])
+                checkstyle 'target/checkstyle/*.xml'
                 }
             }
         }

@@ -1,9 +1,13 @@
 pipeline { 
-   agent any
+   agent {
+       docker {
+           image '3.5.4-jdk-8'
+       }
+   }
     stages { 
         stage('Build') { 
             steps { 
-               echo 'This is a minimal pipeline.' 
+               sh 'mvn -Dmaven.test.failure.ignore=true install' 
             }
         }
     }

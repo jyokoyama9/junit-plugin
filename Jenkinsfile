@@ -20,7 +20,6 @@ pipeline {
         stage('静的解析') {
             steps {
                 checkstyle 'target/checkstyle/*.xml'
-                }
             }
         }
     }
